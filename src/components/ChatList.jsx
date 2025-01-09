@@ -1,23 +1,32 @@
 import React from "react";
 
-const ChatList = ({ chats, onSelectChat }) => {
+function ChatList({ chats, setSelectedChat, handleCreateChatRoom, loading, error }) {
   return (
-    <div className="w-1/3 h-full bg-gray-100 p-4 border-r">
-      <h2 className="text-lg font-semibold mb-4">Chats</h2>
+    <div className="w-1/3 bg-gray-100 p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-bold">Chats</h2>
+        <button
+          className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+          onClick={handleCreateChatRoom} // Llama a la función para crear una sala
+          disabled={loading} // Deshabilita el botón mientras se crea la sala
+        >
+          {loading ? "Creando..." : "Crear Sala"}
+        </button>
+      </div>
       <ul>
-        {chats.map((chat) => (
+        {(chats || []).map((chat, index) => (
           <li
-            key={chat.id}
-            className="p-3 mb-2 bg-white shadow-sm rounded hover:bg-gray-200 cursor-pointer"
-            onClick={() => onSelectChat(chat.id)}
+            key={index}
+            className={`p-2 cursor-pointer ${chat.selected ? "bg-blue-200" : "hover:bg-gray-200"}`}
+            onClick={() => setSelectedChat(chat)}
           >
-            <p className="font-medium">{chat.name}</p>
-            <p className="text-sm text-gray-500 truncate">{chat.lastMessage}</p>
+            {chat.room_code} {/* Mostrar el roomCode (ajustado para que coincida con el backend) */}
           </li>
         ))}
       </ul>
+      {error && <p className="text-red-500">{error}</p>} {/* Muestra el error si ocurre */}
     </div>
   );
-};
+}
 
 export default ChatList;

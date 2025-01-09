@@ -1,11 +1,11 @@
 import React from "react";
 
-const Header = ({ title }) => {
+function Header() {
   return (
-    <div className="w-full p-4 bg-blue-500 text-white">
-      <h1 className="text-lg font-semibold">{title}</h1>
-    </div>
+    <header className="bg-blue-500 text-white p-4 text-center">
+      <h1 className="text-xl font-bold">Chat Application</h1>
+    </header>
   );
-};
+}
 
 export default Header;

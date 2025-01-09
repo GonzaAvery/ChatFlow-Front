@@ -1,32 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 
-const MessageInput = ({ onSendMessage }) => {
-  const [message, setMessage] = useState("");
-
-  const handleSend = () => {
-    if (message.trim()) {
-      onSendMessage(message);
-      setMessage("");
-    }
-  };
-
+function MessageInput({ newMessage, setNewMessage, handleSendMessage }) {
   return (
-    <div className="flex items-center p-4 bg-white border-t">
+    <form onSubmit={handleSendMessage} className="flex mt-4">
       <input
         type="text"
-        className="flex-grow p-2 border rounded-l-lg focus:outline-none"
+        value={newMessage}
+        onChange={(e) => setNewMessage(e.target.value)}
+        className="flex-grow p-2 border rounded"
         placeholder="Escribe un mensaje..."
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
       />
       <button
-        className="p-2 bg-blue-500 text-white rounded-r-lg"
-        onClick={handleSend}
+        type="submit"
+        className="ml-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         Enviar
       </button>
-    </div>
+    </form>
   );
-};
+}
 
 export default MessageInput;

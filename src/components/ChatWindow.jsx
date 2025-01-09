@@ -1,30 +1,37 @@
 import React from "react";
+import MessageInput from "./MessageInput";
 
-const ChatWindow = ({ messages }) => {
+function ChatWindow({
+  selectedChat,
+  newMessage,
+  setNewMessage,
+  handleSendMessage,
+}) {
   return (
-    <div className="w-2/3 h-full flex flex-col">
-      <div className="flex-grow p-4 overflow-y-scroll bg-gray-50">
-        {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`mb-2 ${
-              msg.isOwn
-                ? "text-right"
-                : "text-left"
-            }`}
-          >
-            <p
-              className={`inline-block p-2 rounded-lg ${
-                msg.isOwn ? "bg-blue-500 text-white" : "bg-gray-300"
-              }`}
-            >
-              {msg.content}
-            </p>
+    <div className="w-2/3 bg-white p-4 flex flex-col">
+      {selectedChat ? (
+        <>
+          <h2 className="text-lg font-bold mb-4">{selectedChat.name}</h2>
+          <div className="space-y-2 flex-grow overflow-y-auto">
+            {selectedChat.messages.map((msg, index) => (
+              <p key={index} className="bg-gray-100 p-2 rounded">
+                {msg}
+              </p>
+            ))}
           </div>
-        ))}
-      </div>
+          <MessageInput
+            newMessage={newMessage}
+            setNewMessage={setNewMessage}
+            handleSendMessage={handleSendMessage}
+          />
+        </>
+      ) : (
+        <p className="text-gray-500">
+          Selecciona un chat para ver los mensajes.
+        </p>
+      )}
     </div>
   );
-};
+}
 
 export default ChatWindow;
